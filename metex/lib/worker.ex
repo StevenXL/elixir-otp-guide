@@ -1,4 +1,13 @@
 defmodule Metex.Worker do
+  def loop do
+    receive do
+      {sender_pid, location} ->
+        send(sender_pid, {:ok, temperature_for(location)})
+      {sender_pid, _} ->
+        send(sender_pid, {:error, "Unknown message"})
+    end
+  end
+
   def temperature_for(location) when is_binary(location) do
     result = location |> url_for |> HTTPoison.get |> parse_response |> retrieve_temp
 
