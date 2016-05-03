@@ -6,6 +6,8 @@ defmodule Metex.Worker do
       {sender_pid, _} ->
         send(sender_pid, {:error, "Unknown message"})
     end
+
+    loop
   end
 
   def temperature_for(location) when is_binary(location) do
